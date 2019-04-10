@@ -1,0 +1,187 @@
+<!--test123-->
+<html>
+<title>walleter</title>
+<style>
+.cities {
+  background-color: white;
+  color: white;
+  margin: 0px;
+  padding: 2%;
+  text-align: center;
+} 
+.cities_big {
+  background-color: white;
+  color: white;
+  margin: 0px;
+  padding: 24%;
+  text-align: center;
+} 
+.font_style {
+  font-size: 500%;
+  text-align: center;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+</style>
+
+
+<body>
+
+<h1 
+style="font-size:200%;
+text-align:left;
+background-color:White;"><!--rgb(255, 99, 71)-->
+walleter
+</h1>
+
+
+<div class='cities'></div>
+
+<!--選擇借入、借出-->
+<div class='font_style'>
+<span><a id="amount_scroll_" href="#amount" style="text-decoration:none;color:black"
+onclick="offer()">借出</a></span>
+<span><img src="offer.jpg" alt="Smiley face" height="500" width="500" style="display:block; margin:auto;">
+</span>
+<span><a id="amount_scroll" href="#amount" style="text-decoration:none;color:black"
+onclick="need()">借入</a></span>
+</div>
+
+
+<div class='cities_big'></div>
+
+<!--金額-->
+<div id="amount"></div>
+<div class='font_style'>
+<div id="iframe_offer_amount" hidden>
+借出金額：<input id="offer_amount" type="text" name="欄位名稱">
+</div>
+<div id="iframe_need_amount" hidden>
+借入金額：<input id="need_amount" type="text" name="欄位名稱">
+</div>
+<a id="rate_scroll" href="#rate" style="text-decoration:none;color:black" onclick="amount()">下一步</a>
+</div>
+
+
+<div class='cities_big'></div>
+
+<!--利息-->
+<div id="rate"></div>
+<div class='font_style' id "iframe_rate">
+選擇利息
+<select id="rate_select" name="rate">
+　<option value="1">1%</option>
+　<option value="2">2%</option>
+　<option value="3">3%</option>
+　<option value="4">4%</option>
+　<option value="5">5%</option>
+　<option value="6">6%</option>
+　<option value="7">7%</option>
+　<option value="8">8%</option>
+　<option value="9">9%</option>
+　<option value="10">10%</option>
+</select>
+<div><button id="send_scroll" type="button" onclick="send();">送出</button></div>
+</div>
+
+<div class='cities_big'></div>
+
+<!--查詢結果-->
+<div id="result">
+<table id="result_table" class='font_style'>
+<tr>
+    <th>ID</th>
+    <th>金額</th>
+    <th>利息</th>
+</tr>
+
+</table>
+</div>
+<div class='cities_big'></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(function () {
+
+           $('#rate_scroll').click(function() {
+
+               $('html,body').animate({scrollTop:$('#rate').offset().top}, 800);
+
+           });
+           $('#send_scroll').click(function() {
+
+               $('html,body').animate({scrollTop:$('#result').offset().top}, 800);
+
+           });
+           $('#amount_scroll').click(function() {
+
+               $('html,body').animate({scrollTop:$('#amount').offset().top}, 800);
+
+           });
+           $('#amount_scroll_').click(function() {
+
+               $('html,body').animate({scrollTop:$('#amount').offset().top}, 800);
+
+           });
+   });
+let data = [];
+data.push([0,'路人甲',1000,10]);
+data.push([0,'路人乙',2000,8]);
+data.push([0,'路人丙',4000,6]);
+data.push([0,'路人丁',6000,4]);
+data.push([0,'路人戊',8000,2]);
+data.push([0,'路人己',10000,1]);
+data.push([1,'路人甲',1000,10]);
+data.push([1,'路人乙',2000,8]);
+data.push([1,'路人丙',4000,6]);
+data.push([1,'路人丁',6000,4]);
+data.push([1,'路人戊',8000,2]);
+data.push([1,'路人己',10000,1]);
+
+var type,amount,rate;
+
+function send() {
+  rate = document.getElementById("rate_select").value;
+  for(i=0;i<12;i++){
+      if(data[i][0]!=type){
+          if(type==1){//要借
+            if(data[i][2]>=amount && data[i][3]<=rate){
+              document.getElementById("result_table").innerHTML += '<tr><th>'+data[i][1]+'</th><th>'+data[i][2]+'</th><th>'+data[i][3]+'%</th></tr>';
+            }            
+          }
+          else{
+            if(data[i][2]<=amount && data[i][3]>=
+            rate){
+              document.getElementById("result_table").innerHTML += '<tr><th>'+data[i][1]+'</th><th>'+data[i][2]+'</th><th>'+data[i][3]+'%</th></tr>';
+            }  
+          }
+      }
+  }
+  //window.location.hash = "#result" 
+  
+}
+function need(){
+  document.getElementById('iframe_need_amount').hidden=false;
+  type = 1;
+}
+function offer(){
+  document.getElementById('iframe_offer_amount').hidden=false;
+  type = 0;
+}
+function amount(){
+  if(type==0){
+    amount = document.getElementById("offer_amount").value;
+  }
+  else{
+    amount = document.getElementById("need_amount").value;
+  }
+}
+
+</script>
+
+
+</body>
+</html>
